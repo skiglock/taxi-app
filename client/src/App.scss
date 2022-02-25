@@ -1,8 +1,69 @@
-.vadim {
-  display: flex;
-  flex-flow: row nowrap;
-  font-size: 30px;
-  &__andreev {
-    color: red;
+$default_indent: 20px;
+
+.taxiOrders {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: $default_indent;
+  padding: $default_indent;
+}
+
+.taxiOrder {
+  position: relative;
+  display: grid;
+  align-content: space-between;
+  background-color: rgb(var(--white));
+  border-radius: $default_indent;
+  width: 100%;
+  padding: $default_indent;
+  &__header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+  &__phone {
+    color: rgb(var(--black));
+  }
+  &__time {
+    color: rgb(var(--black));
+  }
+  &__body {
+    margin: $default_indent;
+  }
+  &__adress + &__adress {
+    margin-top: $default_indent;
+  }
+  &__adress {
+    display: grid;
+    row-gap: calc($default_indent / 5);
+    list-style-type: none;
+  }
+  &__description {
+    color: rgb(var(--black));
+    padding: calc($default_indent / 2);
+    border-radius: calc($default_indent / 2);
+    background-color: rgb(var(--light_gray));
+  }
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+  &__status {
+    display: inline-block;
+    padding: 10px 15px;
+    border: none;
+    border-radius: calc($default_indent / 2);
+    color: rgb(var(--white));
+    font-size: $default_indent;
+    cursor: pointer;
+    &_new {
+      background-color: rgb(var(--green));
+    }
+    &_canceled {
+      &:disabled {
+        cursor: not-allowed;
+        background-color: rgba(var(--red), 0.5);
+      }
+      background-color: rgb(var(--red));
+    }
   }
 }

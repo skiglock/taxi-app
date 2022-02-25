@@ -2,11 +2,10 @@ import * as path from "path";
 import { Configuration } from "webpack";
 import "webpack-dev-server";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
 
 interface IMode {
   development: boolean;
-  production: boolean
+  production: boolean;
 }
 
 const PORT = "3000";
@@ -26,6 +25,7 @@ const setupConfig = (mode: IMode): Configuration => {
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "app.[contenthash].js",
+      publicPath: "/",
       clean: true,
     },
     module: {
@@ -38,8 +38,16 @@ const setupConfig = (mode: IMode): Configuration => {
         {
           test: /\.(css|scss|sass)$/,
           use: [
-            development ? "style-loader" : MiniCssExtractPlugin.loader,
-            "css-loader",
+            "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                modules: {
+                  mode: "local",
+                  localIdentName: "[name]__[local]--[hash:base64:5]",
+                },
+              },
+            },
             "postcss-loader",
             "sass-loader",
           ],
@@ -50,10 +58,6 @@ const setupConfig = (mode: IMode): Configuration => {
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"),
       }),
-      new MiniCssExtractPlugin({
-        filename: development ? "[name].css" : "[name].[fullhash].css",
-        chunkFilename: development ? "[id].css" : "[id].[fullhash].css",
-      }),
     ],
     devServer: {
       port: PORT,
@@ -61,9 +65,8 @@ const setupConfig = (mode: IMode): Configuration => {
       hot: development,
     },
     devtool: setupDevTools(),
-    stats: "minimal"
+    stats: "minimal",
   };
-}
-
+};
 
 export default setupConfig;
