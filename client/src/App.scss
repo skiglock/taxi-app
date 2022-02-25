@@ -1,0 +1,8 @@
+.vadim {
+  display: flex;
+  flex-flow: row nowrap;
+  font-size: 30px;
+  &__andreev {
+    color: red;
+  }
+}
