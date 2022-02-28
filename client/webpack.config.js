@@ -1,22 +1,36 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const webpack = require("webpack");
 
 module.exports = (mode) => {
   const { development, production } = mode;
+
   const PORT = 3000;
+
+  const cssDefaultModules = [
+    "postcss-loader",
+    "resolve-url-loader",
+    {
+      loader: "sass-loader",
+      options: {
+        sourceMap: true,
+      },
+    },
+  ];
+
   return {
-    entry: "./src/index.jsx",
+    entry: path.resolve(__dirname, "src/index.tsx"),
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "js/[name].[contenthash:8].js",
-      publicPath: "/",
       clean: true,
     },
     resolve: {
-      extensions: [".js", ".jsx"],
+      extensions: [".js", ".jsx", ".ts", ".tsx", "json"],
     },
-    devtool: development && "eval",
+    devtool: development && "cheap-module-source-map",
     devServer: {
       port: PORT,
       compress: true,
@@ -28,7 +42,7 @@ module.exports = (mode) => {
     module: {
       rules: [
         {
-          test: /\.jsx?$/,
+          test: /\.(js|jsx|ts|tsx)$/,
           exclude: /node_modules/,
           use: {
             loader: "babel-loader",
@@ -39,11 +53,31 @@ module.exports = (mode) => {
           },
         },
         {
-          test: /\.css$/,
+          test: /^(?!.*?\.module).*\.(css|scss|sass)$/,
           use: [
-            production ? MiniCssExtractPlugin.loader : "style-loader",
-            "css-loader",
-          ],
+            development ? MiniCssExtractPlugin.loader : "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                importLoaders: cssDefaultModules.length,
+              },
+            },
+          ].concat(...cssDefaultModules),
+        },
+        {
+          test: /\.module\.(css|scss|sass)$/,
+          use: [
+            development ? MiniCssExtractPlugin.loader : "style-loader",
+            {
+              loader: "css-loader",
+              options: {
+                importLoaders: cssDefaultModules.length,
+                modules: {
+                  localIdentName: "[name]__[local]--[hash:base64:5]",
+                },
+              },
+            },
+          ].concat(...cssDefaultModules),
         },
         {
           test: /\.svg$/,
@@ -78,6 +112,14 @@ module.exports = (mode) => {
           filename: "css/[name].[contenthash:8].css",
           chunkFilename: "css/[name].[contenthash:8].chunk.css",
         }),
+      new webpack.DefinePlugin({
+        "process.env.NODE_ENV": JSON.stringify(
+          production ? "production" : "development"
+        ),
+      }),
+      new ForkTsCheckerWebpackPlugin({
+        async: false,
+      }),
     ].filter(Boolean),
   };
 };
