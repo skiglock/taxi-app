@@ -46,28 +46,23 @@ class TaxiOrderController extends Controller
 
     public function index(Request $request)
     {
-        $offset = 0;
         $limit = 6;
-
-        if($request->offset >= 0) {
-            $offset = $request->offset;
-        }
 
         if($request->limit >= 1) {
             $limit = $request->limit;
         }
 
-        $taxiOrder = TaxiOrder::offset($offset)->limit($limit);
+        $taxiOrder = TaxiOrder::limit($limit);
 
         if(isset(TaxiOrderHelpers::$status[$request->status])) {
             $taxiOrder->where('status', '=', $request->status);
         }
 
-        if(isset(TaxiOrderHelpers::$createdFilters[$request->created_at])) {
-            $taxiOrder->orderBy('created_at', $request->created_at);
+        if(isset(TaxiOrderHelpers::$createdFilters[$request->sort])) {
+            $taxiOrder->orderBy('created_at', $request->sort);
         }
-
-        return $taxiOrder->get();
+        
+        return $taxiOrder->paginate($limit);
     }
 
     public function store(Request $request)

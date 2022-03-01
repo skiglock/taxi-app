@@ -1,15 +1,15 @@
-import { ITaxi, ITaxiPost, ITaxiStatus } from "../types/taxi";
+import { ITaxi, ITaxiPost, ITaxiResponse, TTaxiStatus } from "../types/taxi";
 import { instance } from "./api";
 
 export const taxiAPI = {
-  getTaxi(offset = 1, limit = 6, status = "", created_at = "") {
+  getTaxi(page = 1, limit = 6, status = "", sort = "") {
     return instance
-      .get<ITaxi[]>("orders", {
+      .get<ITaxiResponse>("orders", {
         params: {
-          offset,
+          page,
           limit,
           status,
-          created_at,
+          sort,
         },
       })
       .then((response) => response.data);
@@ -19,7 +19,7 @@ export const taxiAPI = {
       .post<ITaxi>("order/new", order)
       .then((response) => response.data);
   },
-  updateTaxi(id: string, status: ITaxiStatus) {
+  updateTaxi(id: string, status: TTaxiStatus) {
     return instance
       .put<ITaxi>(`orders/${id}`, {
         status,
@@ -28,7 +28,7 @@ export const taxiAPI = {
   },
   deleteTaxi(id: string) {
     return instance
-      .delete<ITaxi>(`orders/${id}`)
+      .delete<ITaxiResponse>(`orders/${id}`)
       .then((response) => response.data);
   },
 };

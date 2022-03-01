@@ -3,13 +3,15 @@ import {
   ETaxiFilters,
   ETaxiSorts,
   ETaxiStatuses,
-  ITaxiSort,
-  ITaxiStatus,
+  TTaxiSort,
+  TTaxiStatus,
 } from "../../types/taxi";
+
+import styles from "./select.module.scss";
 
 interface ISelectOptions {
   title: ETaxiStatuses | ETaxiSorts;
-  value: ITaxiStatus | ITaxiSort;
+  value: TTaxiStatus | TTaxiSort;
 }
 
 interface ISelectProps {

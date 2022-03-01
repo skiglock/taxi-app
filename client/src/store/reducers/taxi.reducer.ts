@@ -1,15 +1,14 @@
 import { TaxiAction, TaxiActionTypes, TaxiState } from "../../types/taxi";
 
 const initialState: TaxiState = {
+  total: 0,
   orders: [],
   loading: false,
   error: null,
-  offset: 1,
-  limit: 6,
-  filters: {
-    status: "",
-    sort: "",
-  },
+  page: 1,
+  limit: 3,
+  status: "",
+  sort: "",
 };
 
 export const taxiReducer = (
@@ -23,7 +22,8 @@ export const taxiReducer = (
       return {
         ...state,
         loading: false,
-        orders: action.payload,
+        orders: [...state.orders, ...action.payload.data],
+        total: action.payload.total,
       };
     case TaxiActionTypes.FETCH_TAXI_ERROR:
       return {
@@ -56,9 +56,30 @@ export const taxiReducer = (
         loading: false,
         orders: [...state.orders].filter(({ id }) => id !== action.payload),
       };
-    case TaxiActionTypes.FILTER_TAXI:
+    case TaxiActionTypes.FILTER_STATUS_TAXI:
       return {
         ...state,
+        status: action.payload,
+        orders: [],
+        page: 1,
+      };
+    case TaxiActionTypes.FILTER_SORT_TAXI:
+      return {
+        ...state,
+        sort: action.payload,
+        orders: [],
+        page: 1,
+      };
+    case TaxiActionTypes.PAGE_OFFSET_TAXI:
+      return {
+        ...state,
+        page:
+          state.total / state.page <= state.limit ? state.page : state.page + 1,
+      };
+    case TaxiActionTypes.PAGE_LIMIT_TAXI:
+      return {
+        ...state,
+        limit: action.payload,
       };
     default:
       return state;

@@ -5,20 +5,22 @@ export interface ITaxiInfo {
 }
 
 export enum ETaxiFilters {
-  RELEVANCE = "relevance",
+  STATUS = "status",
   SORT = "sort",
 }
 
-export type ITaxiStatus = "NEW" | "CANCELED" | "";
+export type TTaxiStatus = "NEW" | "CANCELED" | "";
 
-export type ITaxiSort = "ASC" | "DESC" | "";
+export type TTaxiSort = "ASC" | "DESC" | "";
 
 export enum ETaxiSorts {
+  ALL = "Все",
   ASC = "Сначало новые",
   DESC = "Сначало старое",
 }
 
 export enum ETaxiStatuses {
+  ALL = "Все",
   NEW = "Новый заказ",
   CANCELED = "Отмененный заказ",
 }
@@ -29,22 +31,26 @@ export interface ITaxiPost {
   adress_where: ITaxiInfo;
 }
 
+export interface ITaxiResponse {
+  data: ITaxi[];
+  total: number;
+}
+
 export interface ITaxi extends ITaxiPost {
   id: string;
   created_at: Date;
-  status: ITaxiStatus;
+  status: TTaxiStatus;
 }
 
 export interface TaxiState {
+  total: number;
   orders: ITaxi[];
   loading: boolean | null;
   error: string | null;
-  offset: number;
+  page: number;
   limit: number;
-  filters: {
-    status: ITaxiStatus;
-    sort: ITaxiSort;
-  };
+  status: TTaxiStatus;
+  sort: TTaxiSort;
 }
 
 export enum TaxiActionTypes {
@@ -54,7 +60,10 @@ export enum TaxiActionTypes {
   CREATE_TAXI = "CREATE_TAXI",
   UPDATE_TAXI = "UPDATE_TAXI",
   DELETE_TAXI = "DELETE_TAXI",
-  FILTER_TAXI = "FILTER_TAXI",
+  FILTER_STATUS_TAXI = "FILTER_STATUS_TAXI",
+  FILTER_SORT_TAXI = "FILTER_SORT_TAXI",
+  PAGE_LIMIT_TAXI = "PAGE_LIMIT_TAXI",
+  PAGE_OFFSET_TAXI = "PAGE_OFFSET_TAXI",
 }
 
 interface FetchTaxiAction {
@@ -63,7 +72,7 @@ interface FetchTaxiAction {
 
 interface FetchTaxiSuccessAction {
   type: TaxiActionTypes.FETCH_TAXI_SUCCESS;
-  payload: ITaxi[];
+  payload: { data: ITaxi[]; total: number };
 }
 
 interface FetchTaxiErrorAction {
@@ -78,7 +87,7 @@ interface CreateTaxiAction {
 
 interface UpdateTaxiAction {
   type: TaxiActionTypes.UPDATE_TAXI;
-  payload: { id: string; status: ITaxiStatus };
+  payload: { id: string; status: TTaxiStatus };
 }
 
 interface DeleteTaxiAction {
@@ -86,9 +95,23 @@ interface DeleteTaxiAction {
   payload: string;
 }
 
-interface FilterTaxiAction {
-  type: TaxiActionTypes.FILTER_TAXI;
-  payload: { filter: "status" | "sort" };
+interface FilterStatusTaxiAction {
+  type: TaxiActionTypes.FILTER_STATUS_TAXI;
+  payload: TTaxiStatus;
+}
+
+interface FilterSortTaxiAction {
+  type: TaxiActionTypes.FILTER_SORT_TAXI;
+  payload: TTaxiSort;
+}
+
+interface PageOffsetTaxiction {
+  type: TaxiActionTypes.PAGE_OFFSET_TAXI;
+}
+
+interface PageLimitTaxiAction {
+  type: TaxiActionTypes.PAGE_LIMIT_TAXI;
+  payload: number;
 }
 
 export type TaxiAction =
@@ -98,4 +121,7 @@ export type TaxiAction =
   | CreateTaxiAction
   | UpdateTaxiAction
   | DeleteTaxiAction
-  | FilterTaxiAction;
+  | FilterStatusTaxiAction
+  | FilterSortTaxiAction
+  | PageLimitTaxiAction
+  | PageOffsetTaxiction;

@@ -1,53 +1,61 @@
 import React, { useEffect } from "react";
 import { useAppActions } from "../../hooks/useAppActions";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import {
-  ETaxiFilters,
-  ETaxiSorts,
-  ETaxiStatuses,
-  ITaxiStatus,
-} from "../../types/taxi";
+import { TTaxiSort, TTaxiStatus } from "../../types/taxi";
+import Button from "../Button";
 import Preloader from "../Preloader";
-import Select from "../Select";
 import TaxiOrder from "../TaxiOrder";
+import TaxiOrderFilters from "../TaxiOrderFilters";
 import styles from "./taxiorderlist.module.scss";
 
 const TaxiOrderList: React.FC = () => {
-  const { orders, error, loading } = useAppSelector((state) => state.taxi);
-  const { fetchTaxi, deleteTaxi, updateTaxi } = useAppActions();
+  const { orders, error, loading, page, limit, status, sort, total } =
+    useAppSelector((state) => state.taxi);
+
+  const {
+    fetchTaxi,
+    deleteTaxi,
+    updateTaxi,
+    setTaxiStatus,
+    setTaxiSort,
+    setTaxiPage,
+  } = useAppActions();
 
   useEffect(() => {
-    fetchTaxi(1, 0, "", "DESC");
-  }, []);
+    fetchTaxi(page, limit, status, sort);
+  }, [status, sort, page, limit]);
 
   const handleDelete = (id: string) => {
     deleteTaxi(id);
   };
 
-  const handleChangeStatus = (id: string, status: ITaxiStatus) => {
+  const handleChangeStatus = (id: string, status: TTaxiStatus) => {
     updateTaxi(id, status);
+  };
+
+  const handleSelectStatus = (value: TTaxiStatus) => {
+    setTaxiStatus(value);
+  };
+
+  const handleSelectSort = (value: TTaxiSort) => {
+    setTaxiSort(value);
+  };
+
+  const handleClickLoadMore = () => {
+    setTaxiPage();
   };
   return (
     <>
       {loading && <Preloader />}
       {error && !loading && <div>{error}</div>}
-      {orders.length === 0 && !loading && <div>Пустота</div>}
-      <strong>Фильтры:</strong>
-      <Select
-        name={ETaxiFilters.RELEVANCE}
-        options={[
-          { title: ETaxiStatuses.CANCELED, value: "CANCELED" },
-          { title: ETaxiStatuses.NEW, value: "NEW" },
-        ]}
-      />
-      <Select
-        name={ETaxiFilters.SORT}
-        options={[
-          { title: ETaxiSorts.ASC, value: "ASC" },
-          { title: ETaxiSorts.DESC, value: "DESC" },
-        ]}
+      <TaxiOrderFilters
+        onSelectSort={handleSelectSort}
+        onSelectStatus={handleSelectStatus}
       />
       <div className={styles.container}>
+        {orders.length === 0 && !loading && (
+          <div className={styles.empty}>Нету заказов</div>
+        )}
         {orders &&
           orders.map((order) => (
             <TaxiOrder
@@ -59,6 +67,11 @@ const TaxiOrderList: React.FC = () => {
               }
             />
           ))}
+      </div>
+      <div className={styles.loadMore}>
+        {!loading && orders.length !== total && (
+          <Button onClick={() => handleClickLoadMore()}>Загрузить еще</Button>
+        )}
       </div>
     </>
   );
