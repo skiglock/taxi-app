@@ -2,17 +2,17 @@ import { Dispatch } from "redux";
 import { taxiAPI } from "../../api/taxi";
 import {
   ITaxiPost,
-  TTaxiStatus,
+  ETaxiStatus,
   TaxiAction,
   TaxiActionTypes,
-  TTaxiSort,
+  ETaxiSort,
 } from "../../types/taxi";
 
 export const fetchTaxi = (
   page: number,
   limit: number,
-  status: TTaxiStatus,
-  sort: TTaxiSort
+  status: ETaxiStatus,
+  sort: ETaxiSort
 ) => {
   return async (dispatch: Dispatch<TaxiAction>) => {
     try {
@@ -54,7 +54,7 @@ export const createTaxi = (taxi: ITaxiPost) => {
   };
 };
 
-export const updateTaxi = (id: string, status: TTaxiStatus) => {
+export const updateTaxi = (id: string, status: ETaxiStatus) => {
   return async (dispatch: Dispatch<TaxiAction>) => {
     try {
       dispatch({ type: TaxiActionTypes.FETCH_TAXI });
@@ -93,14 +93,14 @@ export const deleteTaxi = (id: string) => {
   };
 };
 
-export function setTaxiStatus(status: TTaxiStatus) {
+export function setTaxiStatus(status: ETaxiStatus) {
   return {
     type: TaxiActionTypes.FILTER_STATUS_TAXI,
     payload: status,
   };
 }
 
-export function setTaxiSort(sort: TTaxiSort) {
+export function setTaxiSort(sort: ETaxiSort) {
   return {
     type: TaxiActionTypes.FILTER_SORT_TAXI,
     payload: sort,

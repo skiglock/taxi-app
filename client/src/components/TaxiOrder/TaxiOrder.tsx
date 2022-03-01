@@ -1,22 +1,21 @@
 import React from "react";
-import { ITaxi } from "../../types/taxi";
+import { ETaxiStatus, ITaxi } from "../../types/taxi";
 import TaxiOrderInfo from "../TaxiOrderInfo";
 import styles from "./taxiorder.module.scss";
-import { ETaxiStatuses } from "../../types/taxi";
 import clsx from "clsx";
 import Button from "../Button";
 import { formatDate } from "../../utils/formatDate";
 
 interface ITaxiOrderProps {
   order: ITaxi;
-  handleDelete: () => void;
-  handleChangeStatus: () => void;
+  onDelete: () => void;
+  onChangeStatus: () => void;
 }
 
 const TaxiOrder: React.FC<ITaxiOrderProps> = ({
   order,
-  handleDelete,
-  handleChangeStatus,
+  onDelete,
+  onChangeStatus,
 }) => {
   const { phone, created_at, adress_from, adress_where, status } = order;
 
@@ -32,23 +31,24 @@ const TaxiOrder: React.FC<ITaxiOrderProps> = ({
         <span
           className={clsx(
             styles.status,
-            status === "NEW" && styles.status_new,
-            status === "CANCELED" && styles.status_canceled
+            status === ETaxiStatus.NEW && styles.status_new,
+            status === ETaxiStatus.CANCELED && styles.status_canceled
           )}
         >
-          {status && ETaxiStatuses[status]}
+          {(status === ETaxiStatus.NEW && "Новый") ||
+            (status === ETaxiStatus.CANCELED && "Отмененный")}
         </span>
       </header>
       <div className={styles.order__body}>
-        <TaxiOrderInfo come="Откуда" info={adress_from} />
-        <TaxiOrderInfo come="Куда" info={adress_where} />
+        <TaxiOrderInfo title="Откуда" info={adress_from} />
+        <TaxiOrderInfo title="Куда" info={adress_where} />
       </div>
       <footer className={styles.order__footer}>
-        <Button variant="delete" onClick={() => handleDelete()}>
+        <Button variant="delete" onClick={() => onDelete()}>
           Удалить
         </Button>
-        {status === "NEW" && (
-          <Button variant="cancel" onClick={() => handleChangeStatus()}>
+        {status === ETaxiStatus.NEW && (
+          <Button variant="cancel" onClick={() => onChangeStatus()}>
             Отменить заказ
           </Button>
         )}

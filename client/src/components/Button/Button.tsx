@@ -3,20 +3,20 @@ import styles from "./button.module.scss";
 import clsx from "clsx";
 
 interface IButtonProps {
-  variant?: "delete" | "cancel";
+  variant?: "delete" | "cancel" | "success";
   onClick?: () => void;
-  children: React.ReactNode;
+  type?: "submit";
 }
 
-const Button: React.FC<IButtonProps> = (props) => {
-  const { children, variant, onClick } = props;
+const Button: React.FC<IButtonProps> = ({ variant, children, onClick }) => {
   return (
     <button
       onClick={onClick}
       className={clsx(
         styles.button,
         variant === "delete" && styles.button_delete,
-        variant === "cancel" && styles.button_cancel
+        variant === "cancel" && styles.button_cancel,
+        variant === "success" && styles.button_success
       )}
     >
       {children}

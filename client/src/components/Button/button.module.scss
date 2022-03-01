@@ -7,6 +7,12 @@
   border-radius: 10px;
   font-weight: bold;
   background-color: gray;
+  &_success {
+    background-color: green;
+    &:hover {
+      background-color: rgba(green, 0.5);
+    }
+  }
   &_delete {
     background-color: red;
     &:hover {

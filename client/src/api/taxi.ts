@@ -1,4 +1,4 @@
-import { ITaxi, ITaxiPost, ITaxiResponse, TTaxiStatus } from "../types/taxi";
+import { ITaxi, ITaxiPost, ITaxiResponse, ETaxiStatus } from "../types/taxi";
 import { instance } from "./api";
 
 export const taxiAPI = {
@@ -19,7 +19,7 @@ export const taxiAPI = {
       .post<ITaxi>("order/new", order)
       .then((response) => response.data);
   },
-  updateTaxi(id: string, status: TTaxiStatus) {
+  updateTaxi(id: string, status: ETaxiStatus) {
     return instance
       .put<ITaxi>(`orders/${id}`, {
         status,

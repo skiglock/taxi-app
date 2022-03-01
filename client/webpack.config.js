@@ -1,8 +1,9 @@
+require("dotenv").config();
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const webpack = require("webpack");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = (mode) => {
   const { development, production } = mode;
@@ -104,6 +105,7 @@ module.exports = (mode) => {
       ],
     },
     plugins: [
+      new Dotenv(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"),
         inject: true,
@@ -113,11 +115,6 @@ module.exports = (mode) => {
           filename: "css/[name].[contenthash:8].css",
           chunkFilename: "css/[name].[contenthash:8].chunk.css",
         }),
-      new webpack.DefinePlugin({
-        "process.env.NODE_ENV": JSON.stringify(
-          production ? "production" : "development"
-        ),
-      }),
       new ForkTsCheckerWebpackPlugin({
         async: false,
       }),

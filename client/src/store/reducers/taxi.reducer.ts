@@ -1,4 +1,10 @@
-import { TaxiAction, TaxiActionTypes, TaxiState } from "../../types/taxi";
+import {
+  ETaxiSort,
+  ETaxiStatus,
+  TaxiAction,
+  TaxiActionTypes,
+  TaxiState,
+} from "../../types/taxi";
 
 const initialState: TaxiState = {
   total: 0,
@@ -7,8 +13,8 @@ const initialState: TaxiState = {
   error: null,
   page: 1,
   limit: 3,
-  status: "",
-  sort: "",
+  status: ETaxiStatus.DEFAULT,
+  sort: ETaxiSort.DEFAULT,
 };
 
 export const taxiReducer = (

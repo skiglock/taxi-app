@@ -1,17 +1,11 @@
 import React, { ChangeEvent } from "react";
-import {
-  ETaxiFilters,
-  ETaxiSorts,
-  ETaxiStatuses,
-  TTaxiSort,
-  TTaxiStatus,
-} from "../../types/taxi";
+import { ETaxiFilters, ETaxiSort, ETaxiStatus } from "../../types/taxi";
 
 import styles from "./select.module.scss";
 
 interface ISelectOptions {
-  title: ETaxiStatuses | ETaxiSorts;
-  value: TTaxiStatus | TTaxiSort;
+  title: string;
+  value: ETaxiStatus | ETaxiSort;
 }
 
 interface ISelectProps {

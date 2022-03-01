@@ -1,22 +1,21 @@
 import React from "react";
+import { getGoogleMapsAdress } from "../../api/api";
 import { ITaxiInfo } from "../../types/taxi";
 import styles from "./taxiorderinfo.module.scss";
 
 interface ITaxiOrderInfoProps {
   info: ITaxiInfo;
-  come: string;
+  title: string;
 }
 
-const TaxiOrderInfo: React.FC<ITaxiOrderInfoProps> = ({ info, come }) => {
+const TaxiOrderInfo: React.FC<ITaxiOrderInfoProps> = ({ info, title }) => {
   const { latitude, longitude, description } = info;
+
   return (
     <div className={styles.item}>
-      {come}
+      {title}
       <div>
-        <strong>Широта:</strong> {latitude}
-      </div>
-      <div>
-        <strong>Долгота:</strong> {longitude}
+        <strong>Адрес:</strong> {longitude}
       </div>
       <div className={styles.description}>{description}</div>
     </div>

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAppActions } from "../../hooks/useAppActions";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { TTaxiSort, TTaxiStatus } from "../../types/taxi";
+import { ETaxiSort, ETaxiStatus } from "../../types/taxi";
 import Button from "../Button";
 import Preloader from "../Preloader";
 import TaxiOrder from "../TaxiOrder";
@@ -29,15 +30,15 @@ const TaxiOrderList: React.FC = () => {
     deleteTaxi(id);
   };
 
-  const handleChangeStatus = (id: string, status: TTaxiStatus) => {
+  const handleChangeStatus = (id: string, status: ETaxiStatus) => {
     updateTaxi(id, status);
   };
 
-  const handleSelectStatus = (value: TTaxiStatus) => {
+  const handleSelectStatus = (value: ETaxiStatus) => {
     setTaxiStatus(value);
   };
 
-  const handleSelectSort = (value: TTaxiSort) => {
+  const handleSelectSort = (value: ETaxiSort) => {
     setTaxiSort(value);
   };
 
@@ -47,23 +48,29 @@ const TaxiOrderList: React.FC = () => {
   return (
     <>
       {loading && <Preloader />}
-      {error && !loading && <div>{error}</div>}
       <TaxiOrderFilters
         onSelectSort={handleSelectSort}
         onSelectStatus={handleSelectStatus}
       />
+      <div className={styles.createOrder}>
+        <Link to="/order/new">
+          <Button>Создать заказ</Button>
+        </Link>
+      </div>
       <div className={styles.container}>
-        {orders.length === 0 && !loading && (
+        {orders.length === 0 && !loading && !error && (
           <div className={styles.empty}>Нету заказов</div>
         )}
+        {error && !loading && <div className={styles.empty}>{error}</div>}
+
         {orders &&
           orders.map((order) => (
             <TaxiOrder
               key={order.id}
               order={order}
-              handleDelete={() => handleDelete(order.id)}
-              handleChangeStatus={() =>
-                handleChangeStatus(order.id, "CANCELED")
+              onDelete={() => handleDelete(order.id)}
+              onChangeStatus={() =>
+                handleChangeStatus(order.id, ETaxiStatus.CANCELED)
               }
             />
           ))}

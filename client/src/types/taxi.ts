@@ -1,6 +1,10 @@
-export interface ITaxiInfo {
+export interface ITaxiLocation {
   latitude: number;
   longitude: number;
+  adress: string;
+}
+
+export interface ITaxiInfo extends ITaxiLocation {
   description: string;
 }
 
@@ -9,20 +13,20 @@ export enum ETaxiFilters {
   SORT = "sort",
 }
 
-export type TTaxiStatus = "NEW" | "CANCELED" | "";
-
-export type TTaxiSort = "ASC" | "DESC" | "";
-
-export enum ETaxiSorts {
-  ALL = "Все",
-  ASC = "Сначало новые",
-  DESC = "Сначало старое",
+export enum ETaxiFormErrors {
+  required = "Введите что нибудь",
 }
 
-export enum ETaxiStatuses {
-  ALL = "Все",
-  NEW = "Новый заказ",
-  CANCELED = "Отмененный заказ",
+export enum ETaxiStatus {
+  NEW = "NEW",
+  CANCELED = "CANCELED",
+  DEFAULT = "",
+}
+
+export enum ETaxiSort {
+  ASC = "ASC",
+  DESC = "DESC",
+  DEFAULT = "",
 }
 
 export interface ITaxiPost {
@@ -39,7 +43,7 @@ export interface ITaxiResponse {
 export interface ITaxi extends ITaxiPost {
   id: string;
   created_at: Date;
-  status: TTaxiStatus;
+  status: ETaxiStatus;
 }
 
 export interface TaxiState {
@@ -49,8 +53,14 @@ export interface TaxiState {
   error: string | null;
   page: number;
   limit: number;
-  status: TTaxiStatus;
-  sort: TTaxiSort;
+  status: ETaxiStatus;
+  sort: ETaxiSort;
+}
+
+export enum ETaxiOrderValidate {
+  PHONE = "/^[+]?([0-9][s]?|[0-9]?)([(][0-9]{3}[)][s]?|[0-9]{3}[-s.]?)[0-9]{3}[-s.]?[0-9]{4,6}$/im",
+  LATITUDE = "/^-?(90|[1-8][0-9][.][0-9]{1,20}|[0-9][.][0-9]{1,20})$/",
+  LONGITUDE = "/^-?(180|1[1-7][0-9][.][0-9]{1,20}|[1-9][0-9][.][0-9]{1,20}|[0-9][.][0-9]{1,20})$/",
 }
 
 export enum TaxiActionTypes {
@@ -87,7 +97,7 @@ interface CreateTaxiAction {
 
 interface UpdateTaxiAction {
   type: TaxiActionTypes.UPDATE_TAXI;
-  payload: { id: string; status: TTaxiStatus };
+  payload: { id: string; status: ETaxiStatus };
 }
 
 interface DeleteTaxiAction {
@@ -97,12 +107,12 @@ interface DeleteTaxiAction {
 
 interface FilterStatusTaxiAction {
   type: TaxiActionTypes.FILTER_STATUS_TAXI;
-  payload: TTaxiStatus;
+  payload: ETaxiStatus;
 }
 
 interface FilterSortTaxiAction {
   type: TaxiActionTypes.FILTER_SORT_TAXI;
-  payload: TTaxiSort;
+  payload: ETaxiSort;
 }
 
 interface PageOffsetTaxiction {
