@@ -1,0 +1,33 @@
+.order {
+  flex: 1 0 33.3333%;
+  margin: 10px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
+  &__header,
+  &__footer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+  &__body {
+    margin-top: 20px;
+  }
+  &__footer {
+    margin-top: 20px;
+  }
+}
+
+.order + .order {
+  margin-top: 10px;
+}
+
+.status {
+  font-weight: bold;
+  &_new {
+    color: green;
+  }
+  &_canceled {
+    color: red;
+  }
+}

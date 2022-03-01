@@ -1,7 +1,6 @@
 import { Dispatch } from "redux";
 import { taxiAPI } from "../../api/taxi";
 import {
-  ITaxi,
   ITaxiPost,
   ITaxiStatus,
   TaxiAction,
@@ -18,10 +17,12 @@ export const fetchTaxi = (
     try {
       dispatch({ type: TaxiActionTypes.FETCH_TAXI });
       const data = await taxiAPI.getTaxi(offset, limit, status, created_at);
-      dispatch({
-        type: TaxiActionTypes.FETCH_TAXI_SUCCESS,
-        payload: data,
-      });
+      setTimeout(() => {
+        dispatch({
+          type: TaxiActionTypes.FETCH_TAXI_SUCCESS,
+          payload: data,
+        });
+      }, 1200);
     } catch (e) {
       dispatch({
         type: TaxiActionTypes.FETCH_TAXI_ERROR,
@@ -33,8 +34,8 @@ export const fetchTaxi = (
 
 export const createTaxi = (taxi: ITaxiPost) => {
   return async (dispatch: Dispatch<TaxiAction>) => {
-    console.log(taxi);
     try {
+      dispatch({ type: TaxiActionTypes.FETCH_TAXI });
       const data = await taxiAPI.createTaxi(taxi);
       dispatch({
         type: TaxiActionTypes.CREATE_TAXI,
@@ -52,6 +53,7 @@ export const createTaxi = (taxi: ITaxiPost) => {
 export const updateTaxi = (id: string, status: ITaxiStatus) => {
   return async (dispatch: Dispatch<TaxiAction>) => {
     try {
+      dispatch({ type: TaxiActionTypes.FETCH_TAXI });
       const data = await taxiAPI.updateTaxi(id, status);
       dispatch({
         type: TaxiActionTypes.UPDATE_TAXI,
@@ -72,6 +74,7 @@ export const updateTaxi = (id: string, status: ITaxiStatus) => {
 export const deleteTaxi = (id: string) => {
   return async (dispatch: Dispatch<TaxiAction>) => {
     try {
+      dispatch({ type: TaxiActionTypes.FETCH_TAXI });
       await taxiAPI.deleteTaxi(id);
       dispatch({
         type: TaxiActionTypes.DELETE_TAXI,

@@ -1,10 +1,27 @@
-interface ITaxiInfo {
+export interface ITaxiInfo {
   latitude: number;
   longitude: number;
   description: string;
 }
 
-export type ITaxiStatus = "NEW" | "CANCELED";
+export enum ETaxiFilters {
+  RELEVANCE = "relevance",
+  SORT = "sort",
+}
+
+export type ITaxiStatus = "NEW" | "CANCELED" | "";
+
+export type ITaxiSort = "ASC" | "DESC" | "";
+
+export enum ETaxiSorts {
+  ASC = "Сначало новые",
+  DESC = "Сначало старое",
+}
+
+export enum ETaxiStatuses {
+  NEW = "Новый заказ",
+  CANCELED = "Отмененный заказ",
+}
 
 export interface ITaxiPost {
   phone: string;
@@ -14,7 +31,7 @@ export interface ITaxiPost {
 
 export interface ITaxi extends ITaxiPost {
   id: string;
-  created_at: string;
+  created_at: Date;
   status: ITaxiStatus;
 }
 
@@ -24,8 +41,10 @@ export interface TaxiState {
   error: string | null;
   offset: number;
   limit: number;
-  created_at: "ASC" | "DESC" | "";
-  status: string;
+  filters: {
+    status: ITaxiStatus;
+    sort: ITaxiSort;
+  };
 }
 
 export enum TaxiActionTypes {
@@ -35,6 +54,7 @@ export enum TaxiActionTypes {
   CREATE_TAXI = "CREATE_TAXI",
   UPDATE_TAXI = "UPDATE_TAXI",
   DELETE_TAXI = "DELETE_TAXI",
+  FILTER_TAXI = "FILTER_TAXI",
 }
 
 interface FetchTaxiAction {
@@ -66,10 +86,16 @@ interface DeleteTaxiAction {
   payload: string;
 }
 
+interface FilterTaxiAction {
+  type: TaxiActionTypes.FILTER_TAXI;
+  payload: { filter: "status" | "sort" };
+}
+
 export type TaxiAction =
   | FetchTaxiAction
   | FetchTaxiSuccessAction
   | FetchTaxiErrorAction
   | CreateTaxiAction
   | UpdateTaxiAction
-  | DeleteTaxiAction;
+  | DeleteTaxiAction
+  | FilterTaxiAction;

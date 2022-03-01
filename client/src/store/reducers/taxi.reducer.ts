@@ -6,8 +6,10 @@ const initialState: TaxiState = {
   error: null,
   offset: 1,
   limit: 6,
-  status: "",
-  created_at: "",
+  filters: {
+    status: "",
+    sort: "",
+  },
 };
 
 export const taxiReducer = (
@@ -32,11 +34,13 @@ export const taxiReducer = (
     case TaxiActionTypes.CREATE_TAXI:
       return {
         ...state,
+        loading: false,
         orders: [...state.orders, action.payload],
       };
     case TaxiActionTypes.UPDATE_TAXI:
       return {
         ...state,
+        loading: false,
         orders: [...state.orders].map((order) => {
           if (order.id === action.payload.id) {
             order.status = action.payload.status;
@@ -49,7 +53,12 @@ export const taxiReducer = (
     case TaxiActionTypes.DELETE_TAXI:
       return {
         ...state,
+        loading: false,
         orders: [...state.orders].filter(({ id }) => id !== action.payload),
+      };
+    case TaxiActionTypes.FILTER_TAXI:
+      return {
+        ...state,
       };
     default:
       return state;

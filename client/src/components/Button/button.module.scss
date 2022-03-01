@@ -1,0 +1,21 @@
+.button {
+  display: inline-block;
+  cursor: pointer;
+  padding: 10px 15px;
+  color: white;
+  border: 0;
+  border-radius: 10px;
+  font-weight: bold;
+  &_delete {
+    background-color: red;
+    &:hover {
+      background-color: rgba(red, 0.5);
+    }
+  }
+  &_cancel {
+    background-color: darkorange;
+    &:hover {
+      background-color: rgba(darkorange, 0.5);
+    }
+  }
+}

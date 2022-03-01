@@ -1,0 +1,32 @@
+.backdrop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 31;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.preloader {
+  height: 0;
+  width: 0;
+  padding: 30px;
+  margin: 30px auto;
+  border: 6px solid #f3f2f1;
+  border-right-color: #dddddd;
+  border-radius: 50%;
+  animation: rotate 1s infinite linear;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
