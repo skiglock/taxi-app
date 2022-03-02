@@ -1,0 +1,30 @@
+.TaxiOrderForm {
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: lightgray;
+  border-radius: 10px;
+  padding: 20px;
+  width: 500px;
+  & > * + * {
+    margin-top: 10px;
+  }
+  margin-top: 20px;
+}
+
+.MapModal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.error {
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
+}

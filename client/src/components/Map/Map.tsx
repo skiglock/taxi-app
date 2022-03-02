@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapPicker from "react-google-map-picker";
 import { getGoogleMapsAdress } from "../../api/api";
 import { ITaxiLocation } from "../../types/taxi";
@@ -11,8 +11,8 @@ interface IMapsProps {
 }
 
 const Maps: React.FC<IMapsProps> = ({ onChangeLocation }) => {
-  const [defaultMapLocation, setDefaultMapLocation] = useState(defaultLocation);
   const [zoom, setZoom] = useState(defaultZoom);
+  const [defaultMapLocation, setDefaultMapLocation] = useState(defaultLocation);
 
   const handleChangeLocation = async (latitude: number, longitude: number) => {
     const adress = await getGoogleMapsAdress(latitude, longitude);
@@ -21,9 +21,9 @@ const Maps: React.FC<IMapsProps> = ({ onChangeLocation }) => {
     setZoom(defaultZoom);
   };
 
-  function handleChangeZoom(newZoom: number) {
+  const handleChangeZoom = (newZoom: number) => {
     setZoom(newZoom);
-  }
+  };
 
   return (
     <MapPicker

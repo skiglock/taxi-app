@@ -22,12 +22,12 @@ module.exports = (mode) => {
   ];
 
   return {
-    entry: path.resolve(__dirname, "src/index.tsx"),
+    entry: path.join(__dirname, "src/index.tsx"),
     output: {
       path: path.resolve(__dirname, "dist"),
       filename: "js/[name].[contenthash:8].js",
-      publicPath: "/",
       clean: true,
+      publicPath: "/",
     },
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx", "json"],
@@ -108,7 +108,6 @@ module.exports = (mode) => {
       new Dotenv(),
       new HtmlWebpackPlugin({
         template: path.resolve(__dirname, "public/index.html"),
-        inject: true,
       }),
       production &&
         new MiniCssExtractPlugin({

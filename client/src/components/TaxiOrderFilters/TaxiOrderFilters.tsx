@@ -27,8 +27,8 @@ const TaxiOrderFilters: React.FC<ITaxiOrdersFiltersProps> = ({
         name={ETaxiFilters.SORT}
         options={[
           { title: "Все", value: ETaxiSort.DEFAULT },
-          { title: "Сначала новые", value: ETaxiSort.ASC },
-          { title: "Сначала старые", value: ETaxiSort.DESC },
+          { title: "Сначала новые", value: ETaxiSort.DESC },
+          { title: "Сначала старые", value: ETaxiSort.ASC },
         ]}
         onSelectChange={(e) => onSelectSort(e.target.value as ETaxiSort)}
       />

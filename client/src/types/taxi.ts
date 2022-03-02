@@ -1,10 +1,13 @@
-export interface ITaxiLocation {
+export interface ITaxiCoordinates {
   latitude: number;
   longitude: number;
+}
+
+export interface ITaxiLocation extends ITaxiCoordinates {
   adress: string;
 }
 
-export interface ITaxiInfo extends ITaxiLocation {
+export interface ITaxiInfo extends ITaxiCoordinates {
   description: string;
 }
 
@@ -55,12 +58,6 @@ export interface TaxiState {
   limit: number;
   status: ETaxiStatus;
   sort: ETaxiSort;
-}
-
-export enum ETaxiOrderValidate {
-  PHONE = "/^[+]?([0-9][s]?|[0-9]?)([(][0-9]{3}[)][s]?|[0-9]{3}[-s.]?)[0-9]{3}[-s.]?[0-9]{4,6}$/im",
-  LATITUDE = "/^-?(90|[1-8][0-9][.][0-9]{1,20}|[0-9][.][0-9]{1,20})$/",
-  LONGITUDE = "/^-?(180|1[1-7][0-9][.][0-9]{1,20}|[1-9][0-9][.][0-9]{1,20}|[0-9][.][0-9]{1,20})$/",
 }
 
 export enum TaxiActionTypes {

@@ -6,11 +6,20 @@ interface IButtonProps {
   variant?: "delete" | "cancel" | "success";
   onClick?: () => void;
   type?: "submit";
+  disabled?: boolean;
 }
 
-const Button: React.FC<IButtonProps> = ({ variant, children, onClick }) => {
+const Button: React.FC<IButtonProps> = ({
+  variant,
+  children,
+  onClick,
+  type,
+  disabled,
+}) => {
   return (
     <button
+      disabled={disabled}
+      type={type}
       onClick={onClick}
       className={clsx(
         styles.button,

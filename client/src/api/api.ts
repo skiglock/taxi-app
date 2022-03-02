@@ -7,8 +7,6 @@ export const instance = axios.create({
   },
 });
 
-const googleKey = "AIzaSyD2G06tpFNw9hwoEYdA-SFDxMHClKuNKxs";
-
 export const getGoogleMapsAdress = (latitude: number, longitude: number) => {
   return axios
     .get(

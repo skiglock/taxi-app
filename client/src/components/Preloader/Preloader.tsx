@@ -1,11 +1,12 @@
 import React from "react";
+import Backdrop from "../Backdrop";
 import styles from "./preloader.module.scss";
 
 const Preloader = () => {
   return (
-    <div className={styles.backdrop}>
+    <Backdrop>
       <div className={styles.preloader}></div>
-    </div>
+    </Backdrop>
   );
 };
 
