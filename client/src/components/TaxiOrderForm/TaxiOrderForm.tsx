@@ -38,6 +38,7 @@ const TaxiOrderForm: React.FC<ITaxiOrderFormProps> = ({
     <div>
       <div className={styles.TaxiOrderForm}>
         <input
+          name="adress"
           style={{ cursor: "pointer" }}
           placeholder={title}
           readOnly

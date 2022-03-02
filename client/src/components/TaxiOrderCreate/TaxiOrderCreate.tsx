@@ -24,6 +24,7 @@ const TaxiOrderCreate: React.FC = () => {
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
     const data = {
       phone,
       adress_from: {
@@ -47,6 +48,7 @@ const TaxiOrderCreate: React.FC = () => {
         name="phone"
         type="text"
         onChange={(e) => setPhone(e.target.value)}
+        value={phone}
         placeholder="Ваш телефон"
       />
       <TaxiOrderForm
@@ -64,7 +66,7 @@ const TaxiOrderCreate: React.FC = () => {
         onChangeDescription={(text) => setDescriptionWhere(text)}
       />
       <div className={styles.createOrder__post}>
-        <Button type="submit" disabled={loading || false} variant="success">
+        <Button type="submit" variant="success">
           {loading ? "Загрузка" : "Отправить заявку"}
         </Button>
       </div>
