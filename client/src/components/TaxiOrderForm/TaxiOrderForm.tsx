@@ -8,14 +8,12 @@ interface ITaxiOrderFormProps {
   title: string;
   onChangeLocation: ({ latitude, longitude }: ITaxiCoordinates) => void;
   onChangeDescription: (text: string) => void;
-  error: string;
 }
 
 const TaxiOrderForm: React.FC<ITaxiOrderFormProps> = ({
   title,
   onChangeLocation,
   onChangeDescription,
-  error,
 }) => {
   const [isMapActive, setIsMapActive] = useState(false);
   const [selectedAdress, setSelectedAdress] = useState("");
@@ -40,6 +38,8 @@ const TaxiOrderForm: React.FC<ITaxiOrderFormProps> = ({
     <div>
       <div className={styles.TaxiOrderForm}>
         <input
+          required
+          minLength={5}
           name="adress"
           style={{ cursor: "pointer" }}
           placeholder={title}
@@ -48,11 +48,12 @@ const TaxiOrderForm: React.FC<ITaxiOrderFormProps> = ({
           onClick={() => setIsMapActive(true)}
         />
         <textarea
+          required
+          minLength={5}
           placeholder="Комментарий"
           onChange={(e) => handleChangeDescription(e)}
           value={description}
         ></textarea>
-        {error}
       </div>
       {isMapActive && (
         <Backdrop>

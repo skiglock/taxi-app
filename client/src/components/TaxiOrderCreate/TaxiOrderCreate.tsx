@@ -23,45 +23,39 @@ const TaxiOrderCreate: React.FC = () => {
   const [descriptionFrom, setDescriptionFrom] = useState("");
   const [descriptionWhere, setDescriptionWhere] = useState("");
   const [phoneError, setPhoneError] = useState("");
-  const [descriptionError, setDescriptionError] = useState("");
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
-    if (!phone.match(regex.phone)) {
-      setPhoneError("Неправильный номер");
-    }
-    if (descriptionFrom.length < 5) {
-      setDescriptionError("Минимум 5 символов");
-    }
-    if (!phoneError && !descriptionError) {
-      const data = {
-        phone,
-        adress_from: {
-          latitude: locationFrom.latitude,
-          longitude: locationFrom.longitude,
-          description: descriptionFrom,
-        },
-        adress_where: {
-          latitude: locationWhere.latitude,
-          longitude: locationWhere.longitude,
-          description: descriptionWhere,
-        },
-      };
-      createTaxi(data);
-      setPhoneError("");
-    }
+
+    const data = {
+      phone,
+      adress_from: {
+        latitude: locationFrom.latitude,
+        longitude: locationFrom.longitude,
+        description: descriptionFrom,
+      },
+      adress_where: {
+        latitude: locationWhere.latitude,
+        longitude: locationWhere.longitude,
+        description: descriptionWhere,
+      },
+    };
+    createTaxi(data);
   };
 
   return (
     <form className={styles.createOrder} onSubmit={handleSubmit}>
       <h1>Вызвать такси</h1>
       <input
+        title="Телефон"
         name="phone"
-        type="text"
+        type="tel"
+        required
+        pattern={`${regex.phone}`}
+        onFocus={() => setPhoneError("")}
         onChange={(e) => setPhone(e.target.value)}
         value={phone}
         placeholder="Ваш телефон"
-        onFocus={() => setPhoneError("")}
       />
       {phoneError}
       <TaxiOrderForm
@@ -70,7 +64,6 @@ const TaxiOrderCreate: React.FC = () => {
           setLocationFrom({ latitude, longitude })
         }
         onChangeDescription={(text) => setDescriptionFrom(text)}
-        error={descriptionError}
       />
       <TaxiOrderForm
         title="Куда"
@@ -78,7 +71,6 @@ const TaxiOrderCreate: React.FC = () => {
           setLocationWhere({ latitude, longitude })
         }
         onChangeDescription={(text) => setDescriptionWhere(text)}
-        error={descriptionError}
       />
       <div className={styles.createOrder__post}>
         <Button type="submit" variant="success">
