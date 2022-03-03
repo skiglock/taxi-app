@@ -8,7 +8,34 @@
     margin-bottom: 10px;
     text-align: center;
   }
-  &__post {
-    margin-top: 10px;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    padding: 20px;
+    width: 400px;
+    border-radius: 10px;
+    & > * + * {
+      margin-top: 10px;
+    }
   }
+}
+
+.mapModal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  font-size: 10px;
+  text-align: center;
 }
