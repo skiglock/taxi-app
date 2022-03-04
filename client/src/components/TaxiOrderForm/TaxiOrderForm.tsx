@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./taxiorderform.module.scss";
 import { useFormContext } from "react-hook-form";
-import { EFormTypes } from "../../types/form";
+import { ETaxiForm } from "../../types/taxi";
 
 interface TaxiOrderForm {
-  name: EFormTypes;
+  name: ETaxiForm;
   placeholder: string;
   onClickedAdressInput: () => void;
 }

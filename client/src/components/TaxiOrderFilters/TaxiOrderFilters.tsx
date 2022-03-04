@@ -17,9 +17,9 @@ const TaxiOrderFilters: React.FC<ITaxiOrdersFiltersProps> = ({
       <Select
         name={ETaxiFilters.STATUS}
         options={[
-          { title: "Все", value: ETaxiStatus.DEFAULT },
-          { title: "Отмененные", value: ETaxiStatus.CANCELED },
+          { title: "Все заказы", value: ETaxiStatus.DEFAULT },
           { title: "Новые", value: ETaxiStatus.NEW },
+          { title: "Отмененные", value: ETaxiStatus.CANCELED },
         ]}
         onSelectChange={(e) => onSelectStatus(e.target.value as ETaxiStatus)}
       />
@@ -27,8 +27,8 @@ const TaxiOrderFilters: React.FC<ITaxiOrdersFiltersProps> = ({
         name={ETaxiFilters.SORT}
         options={[
           { title: "Все", value: ETaxiSort.DEFAULT },
-          { title: "Сначала новые", value: ETaxiSort.DESC },
-          { title: "Сначала старые", value: ETaxiSort.ASC },
+          { title: "Сначала новые заказы", value: ETaxiSort.DESC },
+          { title: "Сначала старые заказы", value: ETaxiSort.ASC },
         ]}
         onSelectChange={(e) => onSelectSort(e.target.value as ETaxiSort)}
       />

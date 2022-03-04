@@ -3,8 +3,9 @@ export interface ITaxiCoordinates {
   longitude: number;
 }
 
-export interface ITaxiLocation extends ITaxiCoordinates {
+export interface ITaxiFormAdressData extends ITaxiCoordinates {
   adress: string;
+  description: string;
 }
 
 export interface ITaxiInfo extends ITaxiCoordinates {
@@ -14,6 +15,11 @@ export interface ITaxiInfo extends ITaxiCoordinates {
 export enum ETaxiFilters {
   STATUS = "status",
   SORT = "sort",
+}
+
+export enum ETaxiForm {
+  ADRESS_FROM = "adress_from",
+  ADRESS_WHERE = "adress_where",
 }
 
 export enum ETaxiFormErrors {

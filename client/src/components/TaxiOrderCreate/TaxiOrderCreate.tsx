@@ -4,17 +4,19 @@ import Button from "../Button";
 import { FormProvider, useForm } from "react-hook-form";
 import Map from "../Map";
 import TaxiOrderForm from "../TaxiOrderForm";
-import { EFormTypes } from "../../types/form";
 import { regex } from "../../utils/regex";
-import { ITaxiCoordinates, ITaxiInfo } from "../../types/taxi";
+import {
+  ETaxiForm,
+  ITaxiCoordinates,
+  ITaxiFormAdressData,
+} from "../../types/taxi";
 import Backdrop from "../Backdrop";
 import { useAppActions } from "../../hooks/useAppActions";
-import { useAppSelector } from "../../hooks/useAppSelector";
 
 interface ITaxiFormData {
   phone: string;
-  adress_from: ITaxiInfo;
-  adress_where: ITaxiInfo;
+  adress_from: ITaxiFormAdressData;
+  adress_where: ITaxiFormAdressData;
 }
 
 const coordinatesTmp = {
@@ -22,43 +24,48 @@ const coordinatesTmp = {
   longitude: 0,
 };
 
+const MapPickerCoordinates = {
+  lat: 0,
+  lng: 0,
+};
+
 const TaxiOrderCreate: React.FC = () => {
-  const { setFormData } = useAppActions();
-  const formState: ITaxiFormData = useAppSelector((state) => state.form);
+  const { createTaxi } = useAppActions();
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [isLocationSelected, setIsLocationSelected] = useState(false);
-  const [activeMap, setActiveMap] = useState<EFormTypes>();
+  const [activeMap, setActiveMap] = useState("" as ETaxiForm);
   const [mapLocation, setMapLocation] =
     useState<ITaxiCoordinates>(coordinatesTmp);
   const [mapLocationAdress, setMapLocationAdress] = useState("");
-  const [defaultMapLocation, setDefaultMapLocation] = useState<{
-    lat: number;
-    lng: number;
-  }>({
-    lat: 0,
-    lng: 0,
-  });
+  const [defaultMapLocation, setDefaultMapLocation] =
+    useState(MapPickerCoordinates);
+  const [locationFrom, setLocationFrom] = useState(coordinatesTmp);
+  const [locationWhere, setLocationWhere] = useState(coordinatesTmp);
+  const [isFormSend, setIsFormSend] = useState(false);
 
   useEffect(() => {
-    if (isMapOpen && activeMap === EFormTypes.ADRESS_FROM) {
-      dispatchAdressData(EFormTypes.ADRESS_FROM);
-    }
-    if (isMapOpen && activeMap === EFormTypes.ADRESS_WHERE) {
-      dispatchAdressData(EFormTypes.ADRESS_WHERE);
+    if (isMapOpen && isLocationSelected) {
+      setAdressData(activeMap as ETaxiForm);
     }
   }, [isLocationSelected]);
 
   const methods = useForm<ITaxiFormData>();
+  const {
+    setValue: setFormValue,
+    getValues: getFormValue,
+    reset: resetForm,
+  } = methods;
 
-  const dispatchAdressData = (adress: EFormTypes) => {
-    const description = methods.getValues(`${adress}.description`);
-    setFormData(adress, {
-      ...mapLocation,
-      description: description ? description : "",
-    });
+  const setAdressData = (adress: ETaxiForm) => {
+    if (adress === ETaxiForm.ADRESS_FROM) {
+      setLocationFrom(mapLocation);
+    }
+    if (adress === ETaxiForm.ADRESS_WHERE) {
+      setLocationWhere(mapLocation);
+    }
     setIsLocationSelected(false);
     setIsMapOpen(false);
-    methods.setValue(`${adress}.adress` as any, mapLocationAdress);
+    setFormValue(`${adress}.adress`, mapLocationAdress);
   };
 
   const handleChangeLocation = (
@@ -70,30 +77,52 @@ const TaxiOrderCreate: React.FC = () => {
     setIsLocationSelected(true);
   };
 
-  const handleClickedAdressInput = (adress: EFormTypes) => {
-    let formStateCoordinates = {
-      lat: formState[adress].latitude,
-      lng: formState[adress].longitude,
+  const handleClickedAdressInput = (clickedAdress: ETaxiForm) => {
+    const locationFromData = {
+      lat: locationFrom.latitude,
+      lng: locationFrom.longitude,
     };
-    if (EFormTypes.ADRESS_FROM) {
-      methods.setValue(`${EFormTypes.ADRESS_WHERE}.adress` as any, "");
+    const locationWhereData = {
+      lat: locationWhere.latitude,
+      lng: locationWhere.longitude,
+    };
+    if (clickedAdress === ETaxiForm.ADRESS_FROM) {
+      setDefaultMapLocation(locationFromData);
+      setFormValue(`${ETaxiForm.ADRESS_WHERE}.adress`, "");
+      setLocationWhere(coordinatesTmp);
     }
-    if (EFormTypes.ADRESS_WHERE && activeMap === EFormTypes.ADRESS_FROM) {
-      formStateCoordinates = {
-        lat: formState[EFormTypes.ADRESS_FROM].latitude,
-        lng: formState[EFormTypes.ADRESS_FROM].longitude,
-      };
+    if (
+      clickedAdress === ETaxiForm.ADRESS_WHERE &&
+      activeMap === ETaxiForm.ADRESS_FROM
+    ) {
+      setDefaultMapLocation(locationFromData);
+    } else if (clickedAdress === ETaxiForm.ADRESS_WHERE) {
+      setDefaultMapLocation(locationWhereData);
     }
-    setDefaultMapLocation(formStateCoordinates);
     setIsMapOpen(true);
-    setActiveMap(adress);
+    setActiveMap(clickedAdress);
   };
 
   const onSubmit = () => {
-    console.log(formState);
+    const phone = getFormValue("phone");
+    const adressFrom = {
+      ...locationFrom,
+      description: getFormValue(`${ETaxiForm.ADRESS_FROM}.description`),
+    };
+    const adressWhere = {
+      ...locationWhere,
+      description: getFormValue(`${ETaxiForm.ADRESS_WHERE}.description`),
+    };
+    createTaxi({
+      phone,
+      adress_from: adressFrom,
+      adress_where: adressWhere,
+    });
+    setIsFormSend(true);
+    setTimeout(() => setIsFormSend(false), 2000);
+    resetForm();
   };
 
-  console.log(defaultMapLocation);
   return (
     <>
       <div className={styles.createOrder}>
@@ -109,28 +138,26 @@ const TaxiOrderCreate: React.FC = () => {
               {...methods.register("phone", {
                 required: true,
                 pattern: regex.phone,
-                onChange: (e) => {
-                  setFormData("phone", e.target.value);
-                },
               })}
             />
             <span className="error">
               {methods.formState.errors?.phone && "Неправильный номер"}
             </span>
             <TaxiOrderForm
-              name={EFormTypes.ADRESS_FROM}
+              name={ETaxiForm.ADRESS_FROM}
               placeholder="Откуда"
               onClickedAdressInput={() =>
-                handleClickedAdressInput(EFormTypes.ADRESS_FROM)
+                handleClickedAdressInput(ETaxiForm.ADRESS_FROM)
               }
             />
             <TaxiOrderForm
-              name={EFormTypes.ADRESS_WHERE}
+              name={ETaxiForm.ADRESS_WHERE}
               placeholder="Куда"
               onClickedAdressInput={() =>
-                handleClickedAdressInput(EFormTypes.ADRESS_WHERE)
+                handleClickedAdressInput(ETaxiForm.ADRESS_WHERE)
               }
             />
+            {isFormSend && <h1>Ваш заказ создан!</h1>}
             <Button type="submit" variant="success">
               Отправить заявку
             </Button>
