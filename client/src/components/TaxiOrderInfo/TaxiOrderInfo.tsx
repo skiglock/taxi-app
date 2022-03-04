@@ -11,11 +11,11 @@ interface ITaxiOrderInfoProps {
 const TaxiOrderInfo: React.FC<ITaxiOrderInfoProps> = ({ info, title }) => {
   const { latitude, longitude, description } = info;
 
-  const [formatAdess, setFormatAdress] = useState("");
+  const [formatAdress, setFormatAdress] = useState("");
 
   useEffect(() => {
     const changeLocationToAdress = async () => {
-      const adress = await getGoogleMapsAdress(latitude, longitude);
+      const adress = await getGoogleMapsAdress({ latitude, longitude });
       setFormatAdress(adress);
     };
     changeLocationToAdress();
@@ -25,7 +25,7 @@ const TaxiOrderInfo: React.FC<ITaxiOrderInfoProps> = ({ info, title }) => {
     <div className={styles.item}>
       {title}
       <div>
-        <strong>Адрес:</strong> {formatAdess}
+        <strong>Адрес:</strong> {formatAdress}
       </div>
       <div className={styles.description}>{description}</div>
     </div>

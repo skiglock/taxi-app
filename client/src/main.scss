@@ -51,13 +51,20 @@ body::-webkit-scrollbar-thumb:hover {
 
 input,
 textarea {
-  max-width: 100%;
+  width: 100%;
   border-radius: 5px;
   padding: 10px 15px;
   border: none;
   background-color: white;
 }
 textarea {
+  margin-top: 10px;
   resize: none;
   height: 130px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  font-size: 10px;
 }

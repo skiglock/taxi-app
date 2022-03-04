@@ -7,7 +7,13 @@ export const instance = axios.create({
   },
 });
 
-export const getGoogleMapsAdress = (latitude: number, longitude: number) => {
+export const getGoogleMapsAdress = ({
+  latitude,
+  longitude,
+}: {
+  latitude: number;
+  longitude: number;
+}) => {
   return axios
     .get(
       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${process.env.GOOGLE_API_KEY}`
