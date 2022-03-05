@@ -62,6 +62,10 @@ export interface TaxiState {
   error: string | null;
   page: number;
   limit: number;
+  filters: ITaxiFilters;
+}
+
+export interface ITaxiFilters {
   status: ETaxiStatus;
   sort: ETaxiSort;
 }
@@ -73,8 +77,7 @@ export enum TaxiActionTypes {
   CREATE_TAXI = "CREATE_TAXI",
   UPDATE_TAXI = "UPDATE_TAXI",
   DELETE_TAXI = "DELETE_TAXI",
-  FILTER_STATUS_TAXI = "FILTER_STATUS_TAXI",
-  FILTER_SORT_TAXI = "FILTER_SORT_TAXI",
+  FILTER_TAXI = "FILTER_TAXI",
   PAGE_LIMIT_TAXI = "PAGE_LIMIT_TAXI",
   PAGE_OFFSET_TAXI = "PAGE_OFFSET_TAXI",
 }
@@ -108,14 +111,12 @@ interface DeleteTaxiAction {
   payload: string;
 }
 
-interface FilterStatusTaxiAction {
-  type: TaxiActionTypes.FILTER_STATUS_TAXI;
-  payload: ETaxiStatus;
-}
-
-interface FilterSortTaxiAction {
-  type: TaxiActionTypes.FILTER_SORT_TAXI;
-  payload: ETaxiSort;
+interface FilterTaxiAction {
+  type: TaxiActionTypes.FILTER_TAXI;
+  payload: {
+    filter: keyof ITaxiFilters;
+    value: ETaxiStatus | ETaxiSort;
+  };
 }
 
 interface PageOffsetTaxiction {
@@ -134,7 +135,6 @@ export type TaxiAction =
   | CreateTaxiAction
   | UpdateTaxiAction
   | DeleteTaxiAction
-  | FilterStatusTaxiAction
-  | FilterSortTaxiAction
+  | FilterTaxiAction
   | PageLimitTaxiAction
   | PageOffsetTaxiction;

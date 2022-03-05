@@ -1,4 +1,5 @@
 import {
+  ETaxiFilters,
   ETaxiSort,
   ETaxiStatus,
   TaxiAction,
@@ -13,8 +14,10 @@ const initialState: TaxiState = {
   error: null,
   page: 1,
   limit: 3,
-  status: ETaxiStatus.DEFAULT,
-  sort: ETaxiSort.DEFAULT,
+  filters: {
+    status: ETaxiStatus.DEFAULT,
+    sort: ETaxiSort.DEFAULT,
+  },
 };
 
 export const taxiReducer = (
@@ -62,17 +65,13 @@ export const taxiReducer = (
         loading: false,
         orders: [...state.orders].filter(({ id }) => id !== action.payload),
       };
-    case TaxiActionTypes.FILTER_STATUS_TAXI:
+    case TaxiActionTypes.FILTER_TAXI:
       return {
         ...state,
-        status: action.payload,
-        orders: [],
-        page: 1,
-      };
-    case TaxiActionTypes.FILTER_SORT_TAXI:
-      return {
-        ...state,
-        sort: action.payload,
+        filters: {
+          ...state.filters,
+          [action.payload.filter]: action.payload.value,
+        },
         orders: [],
         page: 1,
       };

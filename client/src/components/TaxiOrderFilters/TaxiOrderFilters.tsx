@@ -4,13 +4,14 @@ import Select from "../Select";
 import styles from "./taxiorderfilters.module.scss";
 
 interface ITaxiOrdersFiltersProps {
-  onSelectStatus: (e: ETaxiStatus) => void;
-  onSelectSort: (e: ETaxiSort) => void;
+  onSelectFilter: (
+    filter: ETaxiFilters,
+    value: ETaxiSort | ETaxiStatus
+  ) => void;
 }
 
 const TaxiOrderFilters: React.FC<ITaxiOrdersFiltersProps> = ({
-  onSelectStatus,
-  onSelectSort,
+  onSelectFilter,
 }) => {
   return (
     <div className={styles.orderFilters}>
@@ -21,7 +22,9 @@ const TaxiOrderFilters: React.FC<ITaxiOrdersFiltersProps> = ({
           { title: "Новые", value: ETaxiStatus.NEW },
           { title: "Отмененные", value: ETaxiStatus.CANCELED },
         ]}
-        onSelectChange={(e) => onSelectStatus(e.target.value as ETaxiStatus)}
+        onSelectChange={(e) =>
+          onSelectFilter(ETaxiFilters.STATUS, e.target.value as ETaxiStatus)
+        }
       />
       <Select
         name={ETaxiFilters.SORT}
@@ -30,7 +33,9 @@ const TaxiOrderFilters: React.FC<ITaxiOrdersFiltersProps> = ({
           { title: "Сначала новые заказы", value: ETaxiSort.DESC },
           { title: "Сначала старые заказы", value: ETaxiSort.ASC },
         ]}
-        onSelectChange={(e) => onSelectSort(e.target.value as ETaxiSort)}
+        onSelectChange={(e) =>
+          onSelectFilter(ETaxiFilters.SORT, e.target.value as ETaxiSort)
+        }
       />
     </div>
   );

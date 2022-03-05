@@ -6,6 +6,7 @@ import {
   TaxiAction,
   TaxiActionTypes,
   ETaxiSort,
+  ITaxiFilters,
 } from "../../types/taxi";
 
 export const fetchTaxi = (
@@ -93,17 +94,16 @@ export const deleteTaxi = (id: string) => {
   };
 };
 
-export function setTaxiStatus(status: ETaxiStatus) {
+export function setTaxiFilter(
+  filter: keyof ITaxiFilters,
+  value: ETaxiSort | ETaxiStatus
+) {
   return {
-    type: TaxiActionTypes.FILTER_STATUS_TAXI,
-    payload: status,
-  };
-}
-
-export function setTaxiSort(sort: ETaxiSort) {
-  return {
-    type: TaxiActionTypes.FILTER_SORT_TAXI,
-    payload: sort,
+    type: TaxiActionTypes.FILTER_TAXI,
+    payload: {
+      filter,
+      value,
+    },
   };
 }
 
