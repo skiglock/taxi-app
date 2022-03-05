@@ -27,7 +27,7 @@ module.exports = (mode) => {
       path: path.resolve(__dirname, "dist"),
       filename: "js/[name].[contenthash:8].js",
       clean: true,
-      publicPath: "/",
+      publicPath: development && "/",
     },
     resolve: {
       extensions: [".js", ".jsx", ".ts", ".tsx", "json"],
