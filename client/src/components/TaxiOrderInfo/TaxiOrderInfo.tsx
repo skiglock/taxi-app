@@ -15,8 +15,12 @@ const TaxiOrderInfo: React.FC<ITaxiOrderInfoProps> = ({ info, title }) => {
 
   useEffect(() => {
     const changeLocationToAdress = async () => {
-      const adress = await getGoogleMapsAdress({ latitude, longitude });
-      setFormatAdress(adress);
+      try {
+        const adress = await getGoogleMapsAdress({ latitude, longitude });
+        setFormatAdress(adress);
+      } catch (e) {
+        setFormatAdress(`${e}`);
+      }
     };
     changeLocationToAdress();
   }, []);

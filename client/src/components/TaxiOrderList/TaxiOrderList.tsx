@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAppActions } from "../../hooks/useAppActions";
 import { useAppSelector } from "../../hooks/useAppSelector";
-import { ETaxiFilters, ETaxiSort, ETaxiStatus } from "../../types/taxi";
+import { ETaxiStatus } from "../../types/taxi";
 import Button from "../Button";
 import Preloader from "../Preloader";
 import TaxiOrder from "../TaxiOrder";
