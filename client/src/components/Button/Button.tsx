@@ -18,12 +18,7 @@ const Button: React.FC<IButtonProps> = ({
     <button
       type={type}
       onClick={onClick}
-      className={clsx(
-        styles.button,
-        variant === "delete" && styles.button_delete,
-        variant === "cancel" && styles.button_cancel,
-        variant === "success" && styles.button_success
-      )}
+      className={clsx(styles.button, styles[`button_${variant}`])}
     >
       {children}
     </button>
