@@ -1,42 +1,109 @@
+# version: "3.8"
+# services:
+#   server:
+#     build:
+#       context: ./server
+#       dockerfile: Dockerfile
+#     restart: unless-stopped
+#     environment:
+#       DB_HOST: db
+#       DB_DATABASE: taxiapi
+#       DB_USERNAME: root
+#       DB_PASSWORD: root
+#     ports:
+#       - 8000:8000
+#     volumes:
+#       - ./server:/app/server
+#     depends_on:
+#       - db
+#     networks:
+#       - app
+
+#   client:
+#     build:
+#       context: ./client
+#       dockerfile: Dockerfile
+#     restart: unless-stopped
+#     tty: true
+#     ports:
+#       - 80:80
+#     volumes:
+#       - ./client:/app/client
+#     depends_on:
+#       - server
+#     networks:
+#       - app
+
+#   db:
+#     image: mysql:8.0.28
+#     restart: unless-stopped
+#     networks:
+#       - app
+#     environment:
+#       MYSQL_ROOT_USER: root
+#       MYSQL_ROOT_PASSWORD: root
+#       MYSQL_DATABASE: taxiapi
+#     volumes:
+#       - /dbdata/var/lib/mysql/
+
+# networks:
+#   app:
+#     driver: bridge
+
 version: "3.8"
 services:
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
+    container_name: server
     restart: unless-stopped
+    tty: true
     environment:
       DB_HOST: db
       DB_DATABASE: taxiapi
       DB_USERNAME: root
       DB_PASSWORD: root
-    ports:
-      - 8000:8000
+    working_dir: /var/www/html/
     volumes:
-      - ./server:/app/server
+      - ./:/var/www/html/
     depends_on:
       - db
     networks:
       - app
 
   client:
+    stdin_open: true
     build:
       context: ./client
       dockerfile: Dockerfile
+    container_name: client
+    volumes:
+      - /app/node_modules
+      - ./client:/var/www/html/
+    networks:
+      - app
+
+  webserver:
+    depends_on:
+      - server
+      - client
+    build:
+      context: ./server/nginx
+      dockerfile: Dockerfile
+    container_name: webserver
     restart: unless-stopped
     tty: true
     ports:
-      - 80:80
-    volumes:
-      - ./client:/app/client
-    depends_on:
-      - server
+      - "80:80"
     networks:
       - app
 
   db:
     image: mysql:8.0.28
+    container_name: db
     restart: unless-stopped
+    tty: true
     networks:
       - app
     environment:

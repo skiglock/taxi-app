@@ -1,23 +1,12 @@
-FROM node:alpine as build-stage
-
-WORKDIR /app/client
-
-# Install dependencies
+FROM node:16 as build-stage
+WORKDIR /app
 COPY package*.json ./
 RUN npm install
-
-# Build
-COPY . .
+COPY ./ .
 RUN npm run build
 
-# SERVING IMAGE
-FROM fitiavana07/nginx-react
-
-# Copy built files
-COPY --from=build-stage /app/client/dist /usr/share/nginx/html
-
-# 80 for HTTP
-EXPOSE 80
-
-# Run nginx
-CMD nginx -g 'daemon off;'
+FROM nginx as production-stage
+EXPOSE 3000
+RUN mkdir /app
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build-stage /app/dist /app
