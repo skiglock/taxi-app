@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    # restart: unless-stopped
+    environment:
+      DB_HOST: db
+      DB_DATABASE: taxiapi
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    ports:
+      - 8000:8000
+    volumes:
+      - ./server:/app/server
+    depends_on:
+      - db
+    networks:
+      - app
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    # restart: unless-stopped
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./client:/app/client
+    depends_on:
+      - server
+    networks:
+      - app
+
+  db:
+    image: mysql:8.0.28
+    # restart: unless-stopped
+    networks:
+      - app
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: taxiapi
+    volumes:
+      - /dbdata/var/lib/mysql/
+
+networks:
+  app:
+    driver: bridge

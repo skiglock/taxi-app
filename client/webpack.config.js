@@ -12,7 +12,12 @@ module.exports = (mode) => {
 
   const cssDefaultModules = [
     "postcss-loader",
-    "resolve-url-loader",
+    // {
+    //   loader: "resolve-url-loader",
+    //   options: {
+    //     removeCR: true,
+    //   },
+    // },
     {
       loader: "sass-loader",
       options: {
