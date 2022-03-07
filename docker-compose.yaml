@@ -4,7 +4,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    # restart: unless-stopped
+    restart: unless-stopped
     environment:
       DB_HOST: db
       DB_DATABASE: taxiapi
@@ -23,10 +23,10 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
-    # restart: unless-stopped
+    restart: unless-stopped
     tty: true
     ports:
-      - 3000:3000
+      - 80:80
     volumes:
       - ./client:/app/client
     depends_on:
@@ -36,7 +36,7 @@ services:
 
   db:
     image: mysql:8.0.28
-    # restart: unless-stopped
+    restart: unless-stopped
     networks:
       - app
     environment:
