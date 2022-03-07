@@ -19,15 +19,13 @@ export const fetchTaxi = (
     try {
       dispatch({ type: TaxiActionTypes.FETCH_TAXI });
       const { data, total } = await taxiAPI.getTaxi(page, limit, status, sort);
-      setTimeout(() => {
-        dispatch({
-          type: TaxiActionTypes.FETCH_TAXI_SUCCESS,
-          payload: {
-            data,
-            total,
-          },
-        });
-      }, 1200);
+      dispatch({
+        type: TaxiActionTypes.FETCH_TAXI_SUCCESS,
+        payload: {
+          data,
+          total,
+        },
+      });
     } catch (e) {
       dispatch({
         type: TaxiActionTypes.FETCH_TAXI_ERROR,
@@ -110,12 +108,5 @@ export function setTaxiFilter(
 export function setTaxiPage() {
   return {
     type: TaxiActionTypes.PAGE_OFFSET_TAXI,
-  };
-}
-
-export function setTaxiLimit(limit: number) {
-  return {
-    type: TaxiActionTypes.PAGE_OFFSET_TAXI,
-    payload: limit,
   };
 }

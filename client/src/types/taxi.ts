@@ -78,7 +78,6 @@ export enum TaxiActionTypes {
   UPDATE_TAXI = "UPDATE_TAXI",
   DELETE_TAXI = "DELETE_TAXI",
   FILTER_TAXI = "FILTER_TAXI",
-  PAGE_LIMIT_TAXI = "PAGE_LIMIT_TAXI",
   PAGE_OFFSET_TAXI = "PAGE_OFFSET_TAXI",
 }
 
@@ -119,13 +118,8 @@ interface FilterTaxiAction {
   };
 }
 
-interface PageOffsetTaxiction {
+interface PageOffsetTaxiAction {
   type: TaxiActionTypes.PAGE_OFFSET_TAXI;
-}
-
-interface PageLimitTaxiAction {
-  type: TaxiActionTypes.PAGE_LIMIT_TAXI;
-  payload: number;
 }
 
 export type TaxiAction =
@@ -136,5 +130,4 @@ export type TaxiAction =
   | UpdateTaxiAction
   | DeleteTaxiAction
   | FilterTaxiAction
-  | PageLimitTaxiAction
-  | PageOffsetTaxiction;
+  | PageOffsetTaxiAction;

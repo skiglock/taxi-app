@@ -81,11 +81,6 @@ export const taxiReducer = (
         page:
           state.total / state.page <= state.limit ? state.page : state.page + 1,
       };
-    case TaxiActionTypes.PAGE_LIMIT_TAXI:
-      return {
-        ...state,
-        limit: action.payload,
-      };
     default:
       return state;
   }

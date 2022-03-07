@@ -12,12 +12,7 @@ module.exports = (mode) => {
 
   const cssDefaultModules = [
     "postcss-loader",
-    // {
-    //   loader: "resolve-url-loader",
-    //   options: {
-    //     removeCR: true,
-    //   },
-    // },
+    "resolve-url-loader",
     {
       loader: "sass-loader",
       options: {
@@ -45,6 +40,11 @@ module.exports = (mode) => {
       open: true,
       hot: development,
     },
+    watchOptions: {
+      poll: true,
+      ignored: /node_modules/,
+    },
+
     stats: "minimal",
     module: {
       rules: [
