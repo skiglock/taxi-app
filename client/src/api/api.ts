@@ -1,7 +1,23 @@
 import axios from "axios";
 
+const NODE_ENV = process.env.NODE_ENV;
+const API_DEV_URL = `${process.env.API_DEV_URL}`;
+const API_PROD_URL = `${process.env.API_PROD_URL}`;
+
+const isDevAPI = NODE_ENV === "development";
+const isProdAPI = NODE_ENV === "production";
+
+const setBaseURL = () => {
+  if (isDevAPI) {
+    return API_DEV_URL;
+  }
+  if (isProdAPI) {
+    return API_PROD_URL;
+  }
+};
+
 export const instance = axios.create({
-  baseURL: `${process.env.API_URL}`,
+  baseURL: setBaseURL(),
   headers: {
     "Content-type": "application/json",
   },

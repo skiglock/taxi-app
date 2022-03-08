@@ -4,17 +4,10 @@
 docker-compose up
 ```
 
-## TO MIGRATE MYSQL DATABASE
+## APP URL
 
-```sh
-docker exec -it taxi-app-server-1 bash
-php artisan migrate
-```
+http://localhost
 
 ## API URL
 
-http://localhost:3000/api
-
-## APPLICATION URL
-
-http://localhost
+http://localhost/api

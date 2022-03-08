@@ -1,55 +1,3 @@
-# version: "3.8"
-# services:
-#   server:
-#     build:
-#       context: ./server
-#       dockerfile: Dockerfile
-#     restart: unless-stopped
-#     environment:
-#       DB_HOST: db
-#       DB_DATABASE: taxiapi
-#       DB_USERNAME: root
-#       DB_PASSWORD: root
-#     ports:
-#       - 8000:8000
-#     volumes:
-#       - ./server:/app/server
-#     depends_on:
-#       - db
-#     networks:
-#       - app
-
-#   client:
-#     build:
-#       context: ./client
-#       dockerfile: Dockerfile
-#     restart: unless-stopped
-#     tty: true
-#     ports:
-#       - 80:80
-#     volumes:
-#       - ./client:/app/client
-#     depends_on:
-#       - server
-#     networks:
-#       - app
-
-#   db:
-#     image: mysql:8.0.28
-#     restart: unless-stopped
-#     networks:
-#       - app
-#     environment:
-#       MYSQL_ROOT_USER: root
-#       MYSQL_ROOT_PASSWORD: root
-#       MYSQL_DATABASE: taxiapi
-#     volumes:
-#       - /dbdata/var/lib/mysql/
-
-# networks:
-#   app:
-#     driver: bridge
-
 version: "3.8"
 services:
   server:
@@ -79,7 +27,6 @@ services:
       dockerfile: Dockerfile
     container_name: client
     volumes:
-      - /app/node_modules
       - ./client:/var/www/html/
     networks:
       - app
@@ -100,7 +47,7 @@ services:
       - app
 
   db:
-    image: mysql:8.0.28
+    image: mysql:8.0
     container_name: db
     restart: unless-stopped
     tty: true
@@ -112,6 +59,7 @@ services:
       MYSQL_DATABASE: taxiapi
     volumes:
       - /dbdata/var/lib/mysql/
+      - ./sql/db_taxiapi.sql:/docker-entrypoint-initdb.d/db_taxiapi.sql:ro
 
 networks:
   app:
