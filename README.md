@@ -2,7 +2,6 @@
 
 - Create and Change variables on .env client
 ```sh
-API_DEV_URL=http://localhost:8000/api/
 API_PROD_URL=http://localhost/api/
 GOOGLE_API_KEY=<your_google_api_key>
 ```
@@ -32,16 +31,22 @@ DB_PASSWORD=<your_mysql_password>
 
 ```sh
 API_DEV_URL=http://localhost:8000/api/
-API_PROD_URL=http://localhost/api/
 GOOGLE_API_KEY=<your_google_api_key>
 ```
-- Start MYSQL
+- Start MYSQL Server
 
+- Install Dependencies
 ```sh
 npm run install
+```
+- Start Server
+```sh
 npm run migrate
-npm run start:client
 npm run start:server
+```
+- Start Client
+```sh
+npm run start:client
 ```
 
 | DEV | URL |
