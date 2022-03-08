@@ -42,9 +42,9 @@ GOOGLE_API_KEY=<your_google_api_key>
 - Install Dependencies
 ```sh
 npm run install
-
-
 ```
+
+
 - Start Server
 ```sh
 npm run migrate
