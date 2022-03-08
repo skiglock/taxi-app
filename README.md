@@ -5,7 +5,7 @@
 API_PROD_URL=http://localhost/api/
 GOOGLE_API_KEY=<your_google_api_key>
 ```
-
+- Start App
 ```sh
 docker-compose up
 ```
