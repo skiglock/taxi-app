@@ -1,6 +1,6 @@
 ## Start Taxi Application with PROD
 
-- Create and Change variables on .env client
+- Rename .env.example to .env on client folder
 ```sh
 GOOGLE_API_KEY=<your_google_api_key>
 ```
