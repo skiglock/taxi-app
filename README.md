@@ -11,14 +11,11 @@ GOOGLE_API_KEY=<your_google_api_key>
 docker-compose up
 ```
 
-- APP PROD URL
-```sh
-http://localhost
-```
-- API PROD URL
-```sh
-http://localhost/api
-```
+| PROD | URL |
+| ------ | ------ |
+| APP URL | [http://localhost/][PlDb] |
+| API URL | [http://localhost/api][PlGh] |
+
 
 ## Start Taxi Application with DEV
 
@@ -47,13 +44,7 @@ npm run start:client
 npm run start:server
 ```
 
-- APP DEV URL
-```sh
-http://localhost:3000
-```
-
-- API DEV URL
-```sh
-http://localhost:8000/api
-```
-
+| DEV | URL |
+| ------ | ------ |
+| APP URL | [http://localhost:3000][PlDb] |
+| API URL | [http://localhost:8000][PlGh] |
