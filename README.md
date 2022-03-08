@@ -14,7 +14,7 @@ http://localhost/api
 
 ## Start Taxi Application with DEV
 
-- Change variables on .env
+- Create and Change variables on .env server
 ```sh
 DB_CONNECTION=mysql
 DB_HOST=localhost
