@@ -18,23 +18,20 @@ docker-compose up
 
 ## Start Taxi Application with DEV
 
-- Create and Change variables on .env server
+- Start MYSQL Server
+
+- Rename .env.example to .env on server folder
+- Change DB variables
 ```sh
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_PORT=3306
 DB_DATABASE=taxiapi
 DB_USERNAME=<your_mysql_user>
 DB_PASSWORD=<your_mysql_password>
 ```
-- Create and Change variables on .env client
-
+- Rename .env.example to .env on client folder
+- Add your GOOGLE API KEY
 ```sh
-API_DEV_URL=http://localhost:8000/api/
 GOOGLE_API_KEY=<your_google_api_key>
 ```
-- Start MYSQL Server
-
 - Install Dependencies
 ```sh
 npm run install
