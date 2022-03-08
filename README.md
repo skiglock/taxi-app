@@ -14,8 +14,8 @@ http://localhost/api
 
 ## Start Taxi Application with DEV
 
-- Install MYSQL server
 - Change variables on .env
+- Start MYSQL
 
 ```sh
 npm run install
