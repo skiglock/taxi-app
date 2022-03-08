@@ -1,0 +1,25 @@
+{
+  "name": "taxi-app",
+  "version": "1.0.0",
+  "description": "taxi-app",
+  "main": "index.js",
+  "scripts": {
+    "install:client": "cd ./client && npm install",
+    "install:server": "cd ./server && composer install",
+    "install": "npm run install:client && npm run install:server",
+    "start:client": "cd ./client && npm start",
+    "start:server": "cd ./server && php artisan serve",
+    "migrate": "cd ./server && php artisan migrate:fresh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skiglock/taxi-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/skiglock/taxi-app/issues"
+  },
+  "homepage": "https://github.com/skiglock/taxi-app#readme"
+}
