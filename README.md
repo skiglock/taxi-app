@@ -1,4 +1,4 @@
-## START DOCKER CONTAINER
+## Start Taxi application
 
 ```sh
 docker-compose up
