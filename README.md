@@ -1,5 +1,12 @@
 ## Start Taxi Application with PROD
 
+- Create and Change variables on .env client
+```sh
+API_DEV_URL=http://localhost:8000/api/
+API_PROD_URL=http://localhost/api/
+GOOGLE_API_KEY=<your_google_api_key>
+```
+
 ```sh
 docker-compose up
 ```
@@ -11,6 +18,8 @@ http://localhost
 ## API PROD URL
 
 http://localhost/api
+
+================================================================
 
 ## Start Taxi Application with DEV
 
@@ -28,7 +37,7 @@ DB_PASSWORD=<your_mysql_password>
 ```sh
 API_DEV_URL=http://localhost:8000/api/
 API_PROD_URL=http://localhost/api/
-GOOGLE_API_KEY=<yout_google_api_key>
+GOOGLE_API_KEY=<your_google_api_key>
 ```
 - Start MYSQL
 
