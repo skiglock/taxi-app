@@ -15,6 +15,15 @@ http://localhost/api
 ## Start Taxi Application with DEV
 
 - Change variables on .env
+```sh
+DB_CONNECTION=mysql
+DB_HOST=localhost
+DB_PORT=3306
+DB_DATABASE=taxiapi
+DB_USERNAME=<your_mysql_user>
+DB_PASSWORD=<your_mysql_password>
+```
+
 - Start MYSQL
 
 ```sh
