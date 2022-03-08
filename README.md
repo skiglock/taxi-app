@@ -12,13 +12,13 @@ docker-compose up
 ```
 
 - APP PROD URL
-
+```sh
 http://localhost
-
+```
 - API PROD URL
-
+```sh
 http://localhost/api
-
+```
 
 ## Start Taxi Application with DEV
 
@@ -48,10 +48,11 @@ npm run start:server
 ```
 
 - APP DEV URL
-
+```sh
 http://localhost:3000
 
 - API DEV URL
-
+```sh
 http://localhost:8000/api
+```
 
