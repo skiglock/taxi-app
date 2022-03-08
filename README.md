@@ -4,10 +4,13 @@
 ```sh
 GOOGLE_API_KEY=<your_google_api_key>
 ```
+
+
 - Start App
 ```sh
 docker-compose up
 ```
+
 
 | PROD | URL |
 | ------ | ------ |
@@ -19,6 +22,7 @@ docker-compose up
 
 - Start MYSQL Server
 
+
 - Rename .env.example to .env on server folder
 - Change DB variables
 ```sh
@@ -27,15 +31,18 @@ DB_USERNAME=<your_mysql_user>
 DB_PASSWORD=<your_mysql_password>
 ```
 
+
 - Rename .env.example to .env on client folder
 - Add your GOOGLE API KEY
 ```sh
 GOOGLE_API_KEY=<your_google_api_key>
 ```
 
+
 - Install Dependencies
 ```sh
 npm run install
+
 
 ```
 - Start Server
@@ -44,10 +51,12 @@ npm run migrate
 npm run start:server
 ```
 
+
 - Start Client
 ```sh
 npm run start:client
 ```
+
 
 | DEV | URL |
 | ------ | ------ |
