@@ -23,7 +23,13 @@ DB_DATABASE=taxiapi
 DB_USERNAME=<your_mysql_user>
 DB_PASSWORD=<your_mysql_password>
 ```
+- Create and Change variables on .env client
 
+```sh
+API_DEV_URL=http://localhost:8000/api/
+API_PROD_URL=http://localhost/api/
+GOOGLE_API_KEY=<yout_google_api_key>
+```
 - Start MYSQL
 
 ```sh
