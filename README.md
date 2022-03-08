@@ -13,8 +13,8 @@ docker-compose up
 
 | PROD | URL |
 | ------ | ------ |
-| APP URL | [http://localhost/][PlDb] |
-| API URL | [http://localhost/api][PlGh] |
+| APP URL | http://localhost/ |
+| API URL | http://localhost/api |
 
 
 ## Start Taxi Application with DEV
@@ -46,5 +46,5 @@ npm run start:server
 
 | DEV | URL |
 | ------ | ------ |
-| APP URL | [http://localhost:3000][PlDb] |
-| API URL | [http://localhost:8000][PlGh] |
+| APP URL | http://localhost:3000|
+| API URL | http://localhost:8000 |
