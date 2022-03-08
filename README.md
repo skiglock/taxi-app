@@ -50,6 +50,7 @@ npm run start:server
 - APP DEV URL
 ```sh
 http://localhost:3000
+```
 
 - API DEV URL
 ```sh
