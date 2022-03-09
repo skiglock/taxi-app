@@ -40,8 +40,8 @@ class TaxiOrderController extends Controller
                 'required', 
                 'regex:' . TaxiOrderEnum::$regex['phone']
             ],
-            TaxiOrderService::adressValidate('adress_from'),
-            TaxiOrderService::adressValidate('adress_where')
+            ...TaxiOrderService::adressValidate('adress_from'),
+            ...TaxiOrderService::adressValidate('adress_where')
         ]
         );
 
@@ -51,8 +51,8 @@ class TaxiOrderController extends Controller
 
         $taxiOrder = TaxiOrder::create([
             'phone' => $request->phone,
-            TaxiOrderService::adressCreate('adress_from', $request),
-            TaxiOrderService::adressCreate('adress_where', $request),
+            ...TaxiOrderService::adressCreate('adress_from', $request),
+            ...TaxiOrderService::adressCreate('adress_where', $request),
             'status' => TaxiOrderEnum::$status['NEW'],
 
         ]);
