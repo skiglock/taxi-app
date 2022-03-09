@@ -9,7 +9,8 @@
     "install": "npm run install:client && npm run install:server",
     "start:client": "cd ./client && npm start",
     "start:server": "cd ./server && php artisan serve",
-    "migrate": "cd ./server && php artisan migrate:fresh"
+    "migrate": "cd ./server && php artisan migrate:fresh",
+    "build": "docker-compose up"
   },
   "repository": {
     "type": "git",
