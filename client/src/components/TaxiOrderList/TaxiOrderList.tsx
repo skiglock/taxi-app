@@ -50,7 +50,7 @@ const TaxiOrderList: React.FC = () => {
           ))}
       </div>
       <div className={styles.loadMore}>
-        {!loading && orders.length !== total && orders.length !== 0 && (
+        {!loading && total / page > limit && (
           <Button onClick={() => setTaxiPage()}>Загрузить еще</Button>
         )}
       </div>
